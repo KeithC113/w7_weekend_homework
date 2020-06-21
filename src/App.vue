@@ -2,7 +2,7 @@
   <div id="app">
     <h1> World Cup 2018 Stato</h1>
     <matches-by-round-filter :matches="matches"> </matches-by-round-filter>
-    <match-detail :match="selectedMatch"> </match-detail>
+    <match-detail :match="selectedMatch"></match-detail>
   </div>
 </template>
 
@@ -16,22 +16,24 @@ export default {
   data(){
     return {
       matches:[],
-      stage: "",
+      // stage: "",
       selectedMatch: null
     }
   },
   mounted(){
     this.getMatches(),
 
-    eventBus.$on('match-selected', (match)=> {this.match = selectedMatch})
+    eventBus.$on('match-selected', (match) => {this.selectedMatch = match})
+    // eventBus.$on('detail-info', (match) => {this.})
   },
   methods:{
     getMatches: function(){
       fetch('https://world-cup-json-2018.herokuapp.com/matches')
       .then(response => response.json())
       .then(matches => this.matches = matches)
-      .then(() => this.filterRounds("First stage")
-    )},
+    //   .then(() => this.filterRounds("First stage")
+    // )},
+  },
     filterRounds: function(stage){
       return this.matches.filter((match)=> {
         return match.stage_name !== stage;
